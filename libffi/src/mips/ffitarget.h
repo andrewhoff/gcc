@@ -236,8 +236,9 @@ typedef enum ffi_abi {
 #else
 /* N32/N64. */
 # define FFI_CLOSURES 1
+#define FFI_GO_CLOSURES 1
 #if _MIPS_SIM==_ABI64
-#define FFI_TRAMPOLINE_SIZE 52
+#define FFI_TRAMPOLINE_SIZE 56
 #else
 #define FFI_TRAMPOLINE_SIZE 20
 #endif
