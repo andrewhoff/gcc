@@ -657,11 +657,11 @@ void ffi_call_int(ffi_cif *cif, void (*fn)(void), void *rvalue, void **avalue, v
 
 void ffi_call(ffi_cif *cif, void (*fn)(void), void *rvalue, void **avalue)
 {
-    ffi_call_int (cif, fn, rvalue, avalue, NULL);
+  ffi_call_int (cif, fn, rvalue, avalue, NULL);
 }
 
 void ffi_call_go (ffi_cif *cif, void (*fn)(void), void *rvalue,
- 	     void **avalue, void *closure)
+	     void **avalue, void *closure)
 {
   ffi_call_int (cif, fn, rvalue, avalue, closure);
 }
@@ -775,17 +775,17 @@ ffi_prep_closure_loc (ffi_closure *closure,
  * Based on the similar routine for sparc.
  */
 int
-ffi_closure_mips_inner_O32 (ffi_closure *closure,
+ffi_closure_mips_inner_O32 (ffi_cif *cif,
+                            void (*fun)(ffi_cif*, void*, void**, void*),
+			    void *user_data,
 			    void *rvalue, ffi_arg *ar,
 			    double *fpr)
 {
-  ffi_cif *cif;
   void **avaluep;
   ffi_arg *avalue;
   ffi_type **arg_types;
   int i, avn, argn, seen_int;
 
-  cif = closure->cif;
   avalue = alloca (cif->nargs * sizeof (ffi_arg));
   avaluep = alloca (cif->nargs * sizeof (ffi_arg));
 
@@ -853,7 +853,7 @@ ffi_closure_mips_inner_O32 (ffi_closure *closure,
     }
 
   /* Invoke the closure. */
-  (closure->fun) (cif, rvalue, avaluep, closure->user_data);
+  fun(cif, rvalue, avaluep, user_data);
 
   if (cif->abi == FFI_O32_SOFT_FLOAT)
     {
@@ -929,11 +929,12 @@ copy_struct_N32(char *target, unsigned offset, ffi_abi abi, ffi_type *type,
  *
  */
 int
-ffi_closure_mips_inner_N32 (ffi_closure *closure,
+ffi_closure_mips_inner_N32 (ffi_cif *cif,
+                void (*fun)(ffi_cif*, void*, void**, void*),
+                                void *user_data,
 			    void *rvalue, ffi_arg *ar,
 			    ffi_arg *fpr)
 {
-  ffi_cif *cif;
   void **avaluep;
   ffi_arg *avalue;
   ffi_type **arg_types;
@@ -941,7 +942,6 @@ ffi_closure_mips_inner_N32 (ffi_closure *closure,
   int soft_float;
   ffi_arg *argp;
 
-  cif = closure->cif;
   soft_float = cif->abi == FFI_N64_SOFT_FLOAT
     || cif->abi == FFI_N32_SOFT_FLOAT;
   avalue = alloca (cif->nargs * sizeof (ffi_arg));
@@ -1053,7 +1053,7 @@ ffi_closure_mips_inner_N32 (ffi_closure *closure,
     }
 
   /* Invoke the closure. */
-  (closure->fun) (cif, rvalue, avaluep, closure->user_data);
+  fun (cif, rvalue, avaluep, user_data);
 
   return cif->flags >> (FFI_FLAG_BITS * 8);
 }
@@ -1061,41 +1061,41 @@ ffi_closure_mips_inner_N32 (ffi_closure *closure,
 #endif /* FFI_MIPS_N32 */
 
 #if defined(FFI_MIPS_O32)
- extern void ffi_closure_O32(void);
- extern void ffi_go_closure_O32(void);
+extern void ffi_closure_O32(void);
+extern void ffi_go_closure_O32(void);
 #else
- extern void ffi_closure_N32(void);
- extern void ffi_go_closure_N32(void);
+extern void ffi_closure_N32(void);
+extern void ffi_go_closure_N32(void);
 #endif /* FFI_MIPS_O32 */
 
- ffi_status
- ffi_prep_go_closure (ffi_go_closure* closure, ffi_cif* cif,
- 		     void (*fun)(ffi_cif*,void*,void**,void*))
- {
-   void * fn;
+ffi_status
+ffi_prep_go_closure (ffi_go_closure* closure, ffi_cif* cif,
+		     void (*fun)(ffi_cif*,void*,void**,void*))
+{
+  void * fn;
 
- #if defined(FFI_MIPS_O32)
-   if (cif->abi != FFI_O32 && cif->abi != FFI_O32_SOFT_FLOAT)
-     return FFI_BAD_ABI;
-   fn = ffi_go_closure_O32;
- #else
- #if _MIPS_SIM ==_ABIN32
-   if (cif->abi != FFI_N32
-       && cif->abi != FFI_N32_SOFT_FLOAT)
-     return FFI_BAD_ABI;
- #else
-   if (cif->abi != FFI_N64
-       && cif->abi != FFI_N64_SOFT_FLOAT)
-     return FFI_BAD_ABI;
- #endif
-   fn = ffi_go_closure_N32;
- #endif /* FFI_MIPS_O32 */
+#if defined(FFI_MIPS_O32)
+  if (cif->abi != FFI_O32 && cif->abi != FFI_O32_SOFT_FLOAT)
+    return FFI_BAD_ABI;
+  fn = ffi_go_closure_O32;
+#else
+#if _MIPS_SIM ==_ABIN32
+  if (cif->abi != FFI_N32
+      && cif->abi != FFI_N32_SOFT_FLOAT)
+    return FFI_BAD_ABI;
+#else
+  if (cif->abi != FFI_N64
+      && cif->abi != FFI_N64_SOFT_FLOAT)
+    return FFI_BAD_ABI;
+#endif
+  fn = ffi_go_closure_N32;
+#endif /* FFI_MIPS_O32 */
 
-   closure->tramp = (void *)fn;
-   closure->cif = cif;
-   closure->fun = fun;
+  closure->tramp = (void *)fn;
+  closure->cif = cif;
+  closure->fun = fun;
 
-   return FFI_OK;
- }
+  return FFI_OK;
+}
 
 #endif /* FFI_CLOSURES */
