@@ -963,6 +963,7 @@ BUILDDEPS = \
 	mv -f $@.tmp $@
 
 # Build the .go files for a package, generating a .lo file.
+
 BUILDPACKAGE = \
 	$(MKDIR_P) $(@D); \
 	files=`echo $^ | sed -e 's/[^ ]*\.gox//g' -e 's/[^ ]*\.dep//'`; \
@@ -982,7 +983,7 @@ BUILDNETGO = \
 	$(GOCOMPILE) -I . -c -fPIC -fgo-pkgpath=net -o $@ $$files
 
 GOTESTFLAGS =
-GOBENCH = 
+GOBENCH =
 
 # Check a package.
 CHECK = \
@@ -2632,7 +2633,7 @@ crypto/des.gox: crypto/des.lo
 	$(BUILDGOX)
 crypto/dsa.gox: crypto/dsa.lo
 	$(BUILDGOX)
-crypto/ecdsa.gox: crypto/ecdsa.lo	
+crypto/ecdsa.gox: crypto/ecdsa.lo
 	$(BUILDGOX)
 crypto/elliptic.gox: crypto/elliptic.lo
 	$(BUILDGOX)

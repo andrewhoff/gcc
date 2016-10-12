@@ -297,10 +297,10 @@ LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 SOURCES = $(libgobegin_llgo_a_SOURCES) $(libgobegin_a_SOURCES) \
 	$(libgolibbegin_a_SOURCES) $(libnetgo_a_SOURCES) \
 	$(libgo_llgo_la_SOURCES) $(libgo_la_SOURCES)
-MULTISRCTOP = 
-MULTIBUILDTOP = 
-MULTIDIRS = 
-MULTISUBDIR = 
+MULTISRCTOP =
+MULTIBUILDTOP =
+MULTIDIRS =
+MULTISUBDIR =
 MULTIDO = true
 MULTICLEAN = true
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
@@ -529,7 +529,7 @@ AM_CFLAGS = -fexceptions -fnon-call-exceptions -fplan9-extensions \
 @USING_SPLIT_STACK_TRUE@AM_LDFLAGS = -XCClinker $(SPLIT_STACK)
 
 # Multilib support.
-MAKEOVERRIDES = 
+MAKEOVERRIDES =
 
 # Work around what appears to be a GNU make  handling MAKEFLAGS
 # values defined in terms of make variables, as is the case for CC and
@@ -826,7 +826,7 @@ toolexeclibgounicode_DATA = \
 
 @HAVE_SYS_MMAN_H_FALSE@runtime_mem_file = runtime/mem_posix_memalign.c
 @HAVE_SYS_MMAN_H_TRUE@runtime_mem_file = runtime/mem.c
-@LIBGO_IS_RTEMS_FALSE@rtems_task_variable_add_file = 
+@LIBGO_IS_RTEMS_FALSE@rtems_task_variable_add_file =
 @LIBGO_IS_RTEMS_TRUE@rtems_task_variable_add_file = runtime/rtems-task-variable-add.c
 @LIBGO_IS_LINUX_FALSE@runtime_lock_files = runtime/lock_sema.c runtime/thread-sema.c
 @LIBGO_IS_LINUX_TRUE@runtime_lock_files = runtime/lock_futex.c runtime/thread-linux.c
@@ -945,7 +945,7 @@ runtime_files = \
 	$(runtime_getncpu_file)
 
 noinst_DATA = zstdpkglist.go
-@LIBGO_IS_LINUX_FALSE@syscall_epoll_file = 
+@LIBGO_IS_LINUX_FALSE@syscall_epoll_file =
 @LIBGO_IS_LINUX_TRUE@syscall_epoll_file = epoll.go
 extra_go_files_syscall = \
 	libcalls.go \
@@ -1149,7 +1149,7 @@ libgolibbegin_a_SOURCES = \
 	runtime/go-libmain.c
 
 libgolibbegin_a_CFLAGS = $(AM_CFLAGS) -fPIC
-libnetgo_a_SOURCES = 
+libnetgo_a_SOURCES =
 libnetgo_a_LIBADD = netgo.o
 LTLDFLAGS = $(shell $(SHELL) $(top_srcdir)/../libtool-ldflags $(LDFLAGS))
 AM_GOCFLAGS = $(STRINGOPS_FLAG) $(GO_SPLIT_STACK)
@@ -1194,8 +1194,8 @@ BUILDNETGO = \
 	files=`echo $^ | sed -e 's/[^ ]*\.gox//g' -e 's/[^ ]*\.dep//'`; \
 	$(GOCOMPILE) -I . -c -fPIC -fgo-pkgpath=net -o $@ $$files
 
-GOTESTFLAGS = 
-GOBENCH = 
+GOTESTFLAGS =
+GOBENCH =
 
 # Check a package.
 CHECK = \
@@ -1247,9 +1247,9 @@ CHECK_DEPS = $(toolexeclibgo_DATA) $(toolexeclibgoarchive_DATA) \
 	$(toolexeclibgosync_DATA) $(toolexeclibgotesting_DATA) \
 	$(toolexeclibgotext_DATA) $(toolexeclibgotexttemplate_DATA) \
 	$(toolexeclibgounicode_DATA) $(am__append_1) $(am__append_2)
-@HAVE_STAT_TIMESPEC_FALSE@@LIBGO_IS_SOLARIS_TRUE@matchargs_os = 
+@HAVE_STAT_TIMESPEC_FALSE@@LIBGO_IS_SOLARIS_TRUE@matchargs_os =
 @HAVE_STAT_TIMESPEC_TRUE@@LIBGO_IS_SOLARIS_TRUE@matchargs_os = --tag=solaristag
-@LIBGO_IS_SOLARIS_FALSE@matchargs_os = 
+@LIBGO_IS_SOLARIS_FALSE@matchargs_os =
 extra_go_files_runtime = runtime_sysinfo.go
 runtime_go_lo_GOCFLAGS = -fgo-c-header=runtime.inc.tmp -fgo-compiling-runtime
 @LIBGO_IS_BSD_TRUE@golang_org_x_net_route_lo = \
@@ -1462,7 +1462,7 @@ config.h: stamp-h1
 stamp-h1: $(srcdir)/config.h.in $(top_builddir)/config.status
 	@rm -f stamp-h1
 	cd $(top_builddir) && $(SHELL) ./config.status config.h
-$(srcdir)/config.h.in: @MAINTAINER_MODE_TRUE@ $(am__configure_deps) 
+$(srcdir)/config.h.in: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 	($(am__cd) $(top_srcdir) && $(AUTOHEADER))
 	rm -f stamp-h1
 	touch $@
@@ -1500,19 +1500,19 @@ uninstall-toolexeclibLIBRARIES:
 
 clean-toolexeclibLIBRARIES:
 	-test -z "$(toolexeclib_LIBRARIES)" || rm -f $(toolexeclib_LIBRARIES)
-libgobegin-llgo.a: $(libgobegin_llgo_a_OBJECTS) $(libgobegin_llgo_a_DEPENDENCIES) $(EXTRA_libgobegin_llgo_a_DEPENDENCIES) 
+libgobegin-llgo.a: $(libgobegin_llgo_a_OBJECTS) $(libgobegin_llgo_a_DEPENDENCIES) $(EXTRA_libgobegin_llgo_a_DEPENDENCIES)
 	-rm -f libgobegin-llgo.a
 	$(libgobegin_llgo_a_AR) libgobegin-llgo.a $(libgobegin_llgo_a_OBJECTS) $(libgobegin_llgo_a_LIBADD)
 	$(RANLIB) libgobegin-llgo.a
-libgobegin.a: $(libgobegin_a_OBJECTS) $(libgobegin_a_DEPENDENCIES) $(EXTRA_libgobegin_a_DEPENDENCIES) 
+libgobegin.a: $(libgobegin_a_OBJECTS) $(libgobegin_a_DEPENDENCIES) $(EXTRA_libgobegin_a_DEPENDENCIES)
 	-rm -f libgobegin.a
 	$(libgobegin_a_AR) libgobegin.a $(libgobegin_a_OBJECTS) $(libgobegin_a_LIBADD)
 	$(RANLIB) libgobegin.a
-libgolibbegin.a: $(libgolibbegin_a_OBJECTS) $(libgolibbegin_a_DEPENDENCIES) $(EXTRA_libgolibbegin_a_DEPENDENCIES) 
+libgolibbegin.a: $(libgolibbegin_a_OBJECTS) $(libgolibbegin_a_DEPENDENCIES) $(EXTRA_libgolibbegin_a_DEPENDENCIES)
 	-rm -f libgolibbegin.a
 	$(libgolibbegin_a_AR) libgolibbegin.a $(libgolibbegin_a_OBJECTS) $(libgolibbegin_a_LIBADD)
 	$(RANLIB) libgolibbegin.a
-libnetgo.a: $(libnetgo_a_OBJECTS) $(libnetgo_a_DEPENDENCIES) $(EXTRA_libnetgo_a_DEPENDENCIES) 
+libnetgo.a: $(libnetgo_a_OBJECTS) $(libnetgo_a_DEPENDENCIES) $(EXTRA_libnetgo_a_DEPENDENCIES)
 	-rm -f libnetgo.a
 	$(libnetgo_a_AR) libnetgo.a $(libnetgo_a_OBJECTS) $(libnetgo_a_LIBADD)
 	$(RANLIB) libnetgo.a
@@ -1548,9 +1548,9 @@ clean-toolexeclibLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libgo-llgo.la: $(libgo_llgo_la_OBJECTS) $(libgo_llgo_la_DEPENDENCIES) $(EXTRA_libgo_llgo_la_DEPENDENCIES) 
+libgo-llgo.la: $(libgo_llgo_la_OBJECTS) $(libgo_llgo_la_DEPENDENCIES) $(EXTRA_libgo_llgo_la_DEPENDENCIES)
 	$(libgo_llgo_la_LINK) $(am_libgo_llgo_la_rpath) $(libgo_llgo_la_OBJECTS) $(libgo_llgo_la_LIBADD) $(LIBS)
-libgo.la: $(libgo_la_OBJECTS) $(libgo_la_DEPENDENCIES) $(EXTRA_libgo_la_DEPENDENCIES) 
+libgo.la: $(libgo_la_OBJECTS) $(libgo_la_DEPENDENCIES) $(EXTRA_libgo_la_DEPENDENCIES)
 	$(libgo_la_LINK) $(am_libgo_la_rpath) $(libgo_la_OBJECTS) $(libgo_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
@@ -5262,7 +5262,7 @@ crypto/des.gox: crypto/des.lo
 	$(BUILDGOX)
 crypto/dsa.gox: crypto/dsa.lo
 	$(BUILDGOX)
-crypto/ecdsa.gox: crypto/ecdsa.lo	
+crypto/ecdsa.gox: crypto/ecdsa.lo
 	$(BUILDGOX)
 crypto/elliptic.gox: crypto/elliptic.lo
 	$(BUILDGOX)
